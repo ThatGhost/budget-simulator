@@ -1,7 +1,7 @@
 <div>
-  <header>Hi Ibn</header>
+  <header [style]="'display: ' + (hideHeader ? 'none;' : 'inline;')" >{{headerTitle}}</header>
   <main>
     <router-outlet></router-outlet>
   </main>
-  <footer>footer</footer>
+  <footer [style]="'display: ' + (hideFooter ? 'none;' : 'inline;')">footer</footer>
 </div>

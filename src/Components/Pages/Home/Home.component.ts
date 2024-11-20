@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +8,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './Home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent { }
+export class HomeComponent { 
+
+  public constructor(private readonly router: Router) {
+
+  }
+
+  ngOnInit() {
+    this.router.navigate(["start"]);
+  }
+
+}

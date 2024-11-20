@@ -1,17 +1,20 @@
+@import "../styles/colors";
+
 header {
     height: 5%;
-    background-color: aquamarine;
+    background-color: $c-accent;
     border-radius: 0 0 10px 10px;
     display: flex;
     padding-left: 5%;
     align-items: center;
     font-size: 6vw;
-    color: darkgreen;
+    color: $c-accent-font;
 }
 
 footer {
     height: 8%;
-    background-color: aquamarine;
+    background-color: $c-accent;
+    color: $c-accent-font;
     border-radius: 10px 10px 0 0;
 }
 
@@ -22,4 +25,5 @@ main {
 
 div {
     height: 100vh;
+    overflow: hidden;
 }
