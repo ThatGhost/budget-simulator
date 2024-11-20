@@ -33,5 +33,9 @@
         position: absolute;
         width: 100%;
         bottom: -7%;
+
+        &:active {
+            transform: translate(0, -5px);
+        }
     }
 }

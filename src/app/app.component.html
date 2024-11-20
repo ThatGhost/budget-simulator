@@ -1,7 +1,7 @@
 <div>
-  <header [style]="'display: ' + (hideHeader ? 'none;' : 'inline;')" >{{headerTitle}}</header>
-  <main>
-    <router-outlet></router-outlet>
+  <header [style]="'display: ' + (hideHeader ? 'none;' : 'block;')" >{{headerTitle}}</header>
+  <main [@routeAnimations] = "swipingAnimation ? getAnimationData(outlet) : null">
+    <router-outlet #outlet="outlet"></router-outlet>
   </main>
-  <footer [style]="'display: ' + (hideFooter ? 'none;' : 'inline;')">footer</footer>
+  <footer [style]="'display: ' + (hideFooter ? 'none;' : 'block;')">footer</footer>
 </div>

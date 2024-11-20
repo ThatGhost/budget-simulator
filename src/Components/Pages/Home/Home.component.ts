@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppService } from '../../../Services/Header.service';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +11,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent { 
 
-  public constructor(private readonly router: Router) {
+  public constructor(private readonly router: Router,
+    private readonly appService: AppService
+  ) {
 
   }
 
   ngOnInit() {
+    this.appService.PlayAnimation(false);
     this.router.navigate(["start"]);
   }
-
 }
