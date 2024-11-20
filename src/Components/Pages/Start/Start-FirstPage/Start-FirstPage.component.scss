@@ -2,6 +2,24 @@
 
 .basic-info {
 
+    .form {
+        width: 100%;
+        height: 70vh;
+        margin-bottom: 10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 7%;
+
+        .input {
+            width: 80%;
+        }
+
+        .error {
+            color: red;
+        }
+    }
 
     .button {
         

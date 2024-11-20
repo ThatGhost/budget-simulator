@@ -1,3 +1,51 @@
 <div class = "basic-info">
-  <app-Button-Round fontColor="darkgreen" color="aquamarine" content="Next" fontSize = "5vw" class = "button"></app-Button-Round>
+  <form class="form">
+
+    <mat-form-field class = "input">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Your Name" #name>
+      <mat-hint>What should i call you?</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class = "input">
+      <mat-label>Select</mat-label>
+      <mat-select #country>
+        <mat-option value="BE">Belgium</mat-option>
+        <mat-option value="ES">Spain</mat-option>
+      </mat-select>
+      <mat-hint>Where are you from?</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class = "input">
+      <mat-label>Age</mat-label>
+      <input (input)="IsNumber(age.value)" pattern="[0-9]{1,2}" type="number" matInput placeholder="Your Age" #age>
+      @if (ageIsNumber === false) {
+        <mat-hint class = "error">Please enter a valid age</mat-hint>
+      }
+      @else {
+        <mat-hint>How old are you?</mat-hint>
+      }
+    </mat-form-field>
+
+    <mat-form-field class = "input">
+      <mat-label>Select</mat-label>
+      <mat-select #status>
+        <mat-option value="S">Single</mat-option>
+        <mat-option value="R">Commited relationship</mat-option>
+        <mat-option value="M">Married</mat-option>
+        <mat-option value="K">Married with kids</mat-option>
+      </mat-select>
+      <mat-hint>What is your relationship status?</mat-hint>
+    </mat-form-field>
+
+  </form>
+  <app-Button-Round
+   (Click)="OnNext(name.value, country.value, age.value, status.value)" 
+   fontColor="darkgreen" 
+   color="aquamarine" 
+   content="Next" 
+   fontSize = "5vw" 
+   class = "button"
+   [style]="'opacity: ' + (CanClickNext(name.value, country.value, age.value, status.value) ? '100%;' : '50%;')"
+   ></app-Button-Round>
 </div>
