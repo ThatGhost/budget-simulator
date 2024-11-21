@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService } from '../../../Services/Header.service';
+import { AppService } from '../../../Services/header.service';
 
 @Component({
   selector: 'app-home',

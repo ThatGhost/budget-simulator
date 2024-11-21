@@ -74,4 +74,15 @@ export class SQLiteService {
       throw error;
     }
   }
+
+  async doesTableExist(table: string): Promise<boolean> {
+    try {
+      const result = await CapacitorSQLite.isTableExists({database: this.dbName, readonly: false, table: table});
+      console.log('Database open status:', result);
+      return result.result ?? false;
+    } catch (error) {
+      console.error('Error checking database open status:', error);
+      throw error;
+    }
+  }
 }

@@ -1,8 +1,9 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AppService } from '../Services/Header.service';
+import { AppService } from '../Services/header.service';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
 import { SQLiteService } from '../Services/sqlite.service';
+import { MigrationService } from '../Services/migration.service';
 
 @Component({
   selector: 'app-root',
@@ -34,11 +35,16 @@ export class AppComponent {
   public hideFooter: boolean = false;
   public swipingAnimation: boolean = false;
 
-  public constructor(headerService: AppService, cdr: ChangeDetectorRef, private readonly sqliteService: SQLiteService) {
-    headerService.headerTitleSubject.subscribe((newHeader) => {this.headerTitle = newHeader; cdr.detectChanges();});
-    headerService.hideHeader.subscribe((hide) => {this.hideHeader = hide; cdr.detectChanges()});
-    headerService.hideFooter.subscribe((hide) => {this.hideFooter = hide; cdr.detectChanges()});
-    headerService.playAnimation.subscribe((play) => {this.swipingAnimation = play; cdr.detectChanges()});
+  public constructor(
+    appService: AppService, 
+    cdr: ChangeDetectorRef, 
+    private readonly sqliteService: SQLiteService,
+    private readonly migrationService: MigrationService
+  ) {
+    appService.headerTitleSubject.subscribe((newHeader) => {this.headerTitle = newHeader; cdr.detectChanges();});
+    appService.hideHeader.subscribe((hide) => {this.hideHeader = hide; cdr.detectChanges()});
+    appService.hideFooter.subscribe((hide) => {this.hideFooter = hide; cdr.detectChanges()});
+    appService.playAnimation.subscribe((play) => {this.swipingAnimation = play; cdr.detectChanges()});
   }
 
   getAnimationData(outlet: RouterOutlet) {
@@ -49,13 +55,7 @@ export class AppComponent {
     try {
       await this.sqliteService.initializeWebPlugin();
       await this.sqliteService.createConnection();
-      await this.sqliteService.openConnection();
-
-      // Example query
-      await this.sqliteService.executeQuery('CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, name TEXT)');
-      console.log('Table created.');
-
-      await this.sqliteService.closeConnection();
+      await this.migrationService.RunMigrations();
     } catch (error) {
       console.error('SQLite error:', error);
     }
