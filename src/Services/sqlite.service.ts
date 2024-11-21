@@ -54,10 +54,19 @@ export class SQLiteService {
     }
   }
 
-  async executeQuery(statement: string, values: any[] = []): Promise<any> {
+  async executeQuery(statement: string, values: any[] = []): Promise<any[] | undefined> {
     try {
-        const result = await CapacitorSQLite.query({database: this.dbName, readonly: false,statement: statement, values: values});
-        return result;
+        return (await CapacitorSQLite.query({database: this.dbName, readonly: false, statement: statement, values: values})).values;
+    } catch (error) {
+      console.error('Error executing query:', error);
+      throw error;
+    }
+  }
+
+  async GetOne(statement: string, values: any[] = []): Promise<any | undefined> {
+    try {
+        const result: any[] | undefined = (await CapacitorSQLite.query({database: this.dbName, readonly: false, statement: statement, values: values})).values;
+        return result === undefined ? undefined : result[0];
     } catch (error) {
       console.error('Error executing query:', error);
       throw error;
@@ -67,10 +76,8 @@ export class SQLiteService {
   async isDatabaseOpen(): Promise<boolean> {
     try {
       const result = await CapacitorSQLite.isDBOpen({database: this.dbName, readonly: false});
-      console.log('Database open status:', result);
       return result.result ?? false;
     } catch (error) {
-      console.error('Error checking database open status:', error);
       throw error;
     }
   }
@@ -78,10 +85,8 @@ export class SQLiteService {
   async doesTableExist(table: string): Promise<boolean> {
     try {
       const result = await CapacitorSQLite.isTableExists({database: this.dbName, readonly: false, table: table});
-      console.log('Database open status:', result);
       return result.result ?? false;
     } catch (error) {
-      console.error('Error checking database open status:', error);
       throw error;
     }
   }

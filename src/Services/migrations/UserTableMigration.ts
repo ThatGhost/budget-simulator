@@ -12,5 +12,6 @@ export class UserTableMigration implements IMigration {
         if(await this.sqliteService.doesTableExist(userTableName)) return;
 
         await this.sqliteService.executeQuery(`CREATE TABLE ${userTableName} ( name varchar(255), country varchar(2), age tinyint, status varchar(1) );`);
+        await this.sqliteService.executeQuery(`INSERT INTO ${userTableName} ( name, country, age, status) VALUES ('', '', 0, '');`);
     }
 }
