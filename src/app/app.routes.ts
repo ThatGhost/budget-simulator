@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from '../Components/Pages/Home/Home.component';
 import { StartWelcomeComponent } from '../Components/Pages/Start/Start-Welcome/Start-Welcome.component';
-import { StartFirstPageComponent } from '../Components/Pages/Start/Start-FirstPage/Start-FirstPage.component';
+import { StartFirstPageComponent } from '../Components/Pages/Start/Start-BasicData/Start-FirstPage.component';
+import { StartFinanceBasicsComponent } from '../Components/Pages/Start/Start-FinanceBasics/Start-FinanceBasics.component';
 
 export const routes: Routes = [{
     component: HomeComponent,
@@ -19,6 +20,13 @@ export const routes: Routes = [{
     path: "start/first",
     data: {
         animation: "StartFirstPage"
+    }
+},
+{
+    component: StartFinanceBasicsComponent,
+    path: "start/finances",
+    data: {
+        animation: "StartFinancesPage"
     }
 }
 ];

@@ -28,13 +28,13 @@ export class MigrationService {
       console.log("created migrations table");
     }
 
-    const existingMigrations: any[] | undefined = await this.sqliteService.executeQuery(`SELECT name, succeeded from ${migrationsTableName} WHERE`);
-    if(existingMigrations === undefined) throw Error("Could not get migrations");
+    const existingMigrations: any[] = await this.sqliteService.executeQuery(`SELECT name, succeeded from ${migrationsTableName}`);
 
-    this.migrations.forEach(async (migration) => {
+    for (const migration of this.migrations) {
       const migrationName = migration.name.toString();
+      const migrationInExisting = existingMigrations.filter(m => m.name === migrationName);
 
-      if(!_.includes(existingMigrations, {name: migrationName, succeeded: 1})) {
+      if(migrationInExisting.length === 0 || migrationInExisting[0].succeeded === 0) {
         try{
           await migration.Run();
           console.log(`migration ${migrationName} succeeded`);
@@ -44,7 +44,7 @@ export class MigrationService {
           await this.sqliteService.executeQuery(`INSERT INTO ${migrationsTableName} (name, succeeded) VALUES ('${migrationName}', 0)`);
         }
       }
-    });
+    }
 
     await this.sqliteService.closeConnection();
   }

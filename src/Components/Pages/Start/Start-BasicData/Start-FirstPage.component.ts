@@ -5,7 +5,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { IUser, UserService } from '../../../../Services/user.service';
+import { Country, UserService, UserStatus } from '../../../../Services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Start-FirstPage',
@@ -14,12 +15,10 @@ import { IUser, UserService } from '../../../../Services/user.service';
   imports: [ButtonRoundComponent, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule]
 })
 export class StartFirstPageComponent {
-  public ageIsNumber: boolean | null = null; 
-  public user: IUser = { name: "", age: 0, country: "BE", status: "K"};
-
   constructor(
     private readonly appService: AppService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly router: Router
   ) {
   }
 
@@ -28,21 +27,20 @@ export class StartFirstPageComponent {
     this.appService.HideFooter(true);
     this.appService.PlayAnimation(true);
     this.appService.ChangeHeaderName("Basic information");
-    this.user = await this.userService.getUserData();
-    console.log(this.user);
   }
 
-  public OnNext(name: string, country: string, age: string, status: string) {
+  public async OnNext(name: string, country: string, age: string, status: string) {
     if(!this.CanClickNext(name, country, age, status)) return;
+    await this.userService.updateUserData(name, country as Country, parseInt(age), status as UserStatus);
+    this.router.navigate(["start", "finances"])
   }
 
   public CanClickNext(name: string, country: string, age: string, status: string): boolean {
-    return !!name && !!country && !!age && !!status && this.ageIsNumber === true;
+    return !!name && !!country && !!age && !!status && this.IsNumber(age);
   }
 
-  public IsNumber(numb: string) {
-    this.ageIsNumber = !isNaN(parseInt(numb));
-    console.log(this.ageIsNumber);
+  public IsNumber(numb: string): boolean {
+    return numb === "" || !isNaN(parseInt(numb));
   }
 
 }

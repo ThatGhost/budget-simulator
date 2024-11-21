@@ -1,0 +1,63 @@
+<div class = "basic-info">
+  <div class = "warning">
+    <span>Your data is stored on device. We do not save your data on servers</span>
+  </div>
+
+  <form class="form">
+
+    <mat-form-field class = "input">
+      <mat-label>Total funds</mat-label>
+      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Total funds" #funds>
+      @if (!IsNumber(funds.value)) {
+        <mat-hint class = "error">Please enter a valid number</mat-hint>
+      }
+      @else {
+        <mat-hint>How much money is in your bank account?</mat-hint>
+      }
+    </mat-form-field>
+
+    <mat-form-field class = "input">
+      <mat-label>Fixed Costs</mat-label>
+      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Fixed costs" #costs>
+      @if (!IsNumber(costs.value)) {
+        <mat-hint class = "error">Please enter a valid number</mat-hint>
+      }
+      @else {
+        <mat-hint>How much is rent, utilities, etc?</mat-hint>
+      }
+    </mat-form-field>
+
+    <mat-form-field class = "input">
+      <mat-label>Income</mat-label>
+      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Income" #income>
+      @if (!IsNumber(income.value)) {
+        <mat-hint class = "error">Please enter a valid number</mat-hint>
+      }
+      @else {
+        <mat-hint>How much do you make each month?</mat-hint>
+      }
+    </mat-form-field>
+
+
+    <mat-form-field class = "input">
+      <mat-label>Debt</mat-label>
+      <mat-select #debt>
+        <mat-option value="N">No Debt</mat-option>
+        <mat-option value="M">Mortgage</mat-option>
+        <mat-option value="D">Has Debt</mat-option>
+        <mat-option value="MD">Mortgage and debt</mat-option>
+      </mat-select>
+      <mat-hint>Do you have any debt?</mat-hint>
+    </mat-form-field>
+
+  </form>
+  <app-Button-Round
+   (Click)="OnNext(funds.value, costs.value, income.value, debt.value)" 
+   fontColor="darkgreen" 
+   color="aquamarine" 
+   content="Next" 
+   fontSize = "5vw" 
+   class = "button"
+   [style]="'opacity: ' + (CanClickNext(funds.value, costs.value, income.value, debt.value) ? '100%;' : '50%;')"
+   ></app-Button-Round>
+</div>

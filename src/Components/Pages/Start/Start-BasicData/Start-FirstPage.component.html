@@ -1,9 +1,7 @@
 <div class = "basic-info">
   <div class = "warning">
-    <span>Your data is stored on your phone. We do not save your data on servers</span>
+    <span>Your data is stored on device. We do not save your data on servers</span>
   </div>
-
-  <p>{{user.age}}</p>
 
   <form class="form">
 
@@ -24,8 +22,8 @@
 
     <mat-form-field class = "input">
       <mat-label>Age</mat-label>
-      <input (input)="IsNumber(age.value)" pattern="[0-9]{1,2}" type="number" matInput placeholder="Your Age" #age>
-      @if (ageIsNumber === false) {
+      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Your Age" #age>
+      @if (!IsNumber(age.value)) {
         <mat-hint class = "error">Please enter a valid age</mat-hint>
       }
       @else {

@@ -54,9 +54,9 @@ export class SQLiteService {
     }
   }
 
-  async executeQuery(statement: string, values: any[] = []): Promise<any[] | undefined> {
+  async executeQuery(statement: string, values: any[] = []): Promise<any[]> {
     try {
-        return (await CapacitorSQLite.query({database: this.dbName, readonly: false, statement: statement, values: values})).values;
+        return (await CapacitorSQLite.query({database: this.dbName, readonly: false, statement: statement, values: values})).values ?? [];
     } catch (error) {
       console.error('Error executing query:', error);
       throw error;
@@ -84,8 +84,8 @@ export class SQLiteService {
 
   async doesTableExist(table: string): Promise<boolean> {
     try {
-      const result = await CapacitorSQLite.isTableExists({database: this.dbName, readonly: false, table: table});
-      return result.result ?? false;
+      const result = await CapacitorSQLite.getTableList({database: this.dbName, readonly: false});
+      return result.values?.includes(table) ?? false;
     } catch (error) {
       throw error;
     }
