@@ -1,14 +1,28 @@
 import { Injectable } from '@angular/core';
+import { Capacitor } from '@capacitor/core';
 import { CapacitorSQLite, SQLiteDBConnection } from '@capacitor-community/sqlite';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class DatabaseService {
-  private dbConnection?: SQLiteDBConnection;
-  private dbName = 'budgetapp';
-  constructor() {
+export class SQLiteService {
+  private platform: string;
+  private dbName: string = "";
 
+  constructor() {
+    this.platform = Capacitor.getPlatform();
+  }
+
+  async initializeWebPlugin(): Promise<void> {
+    if (this.platform === 'web') {
+      const jeepEl = document.querySelector('jeep-sqlite');
+      if (jeepEl != null) {
+        await CapacitorSQLite.initWebStore();
+        console.log('Web store initialized for SQLite.');
+      } else {
+        throw new Error('The jeep-sqlite element is not present in the DOM!');
+      }
+    }
   }
 
   async createConnection(): Promise<void> {
@@ -23,12 +37,8 @@ export class DatabaseService {
 
   async openConnection(): Promise<void> {
     try {
-      if (!this.dbConnection) {
-        await CapacitorSQLite.open({ database: this.dbConnection, readonly: false});
+        await CapacitorSQLite.open({ database: this.dbName, readonly: false});
         console.log(`Database ${this.dbName} opened.`);
-      } else {
-        console.warn('Connection already open.');
-      }
     } catch (error) {
       console.error('Error opening database connection:', error);
       throw error;
@@ -37,13 +47,7 @@ export class DatabaseService {
 
   async closeConnection(): Promise<void> {
     try {
-      if (this.dbConnection) {
-        await this.dbConnection.close();
-        console.log(`Database ${this.dbName} closed.`);
-        this.dbConnection = undefined;
-      } else {
-        console.warn('No connection to close.');
-      }
+        await CapacitorSQLite.close({database: this.dbName, readonly: false});
     } catch (error) {
       console.error('Error closing database connection:', error);
       throw error;
@@ -52,13 +56,8 @@ export class DatabaseService {
 
   async executeQuery(statement: string, values: any[] = []): Promise<any> {
     try {
-      if (this.dbConnection) {
-        const result = await this.dbConnection.query(statement, values);
-        console.log('Query executed:', result);
+        const result = await CapacitorSQLite.query({database: this.dbName, readonly: false,statement: statement, values: values});
         return result;
-      } else {
-        throw new Error('Database connection is not open.');
-      }
     } catch (error) {
       console.error('Error executing query:', error);
       throw error;

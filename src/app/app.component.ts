@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AppService } from '../Services/Header.service';
 import { animate, group, query, style, transition, trigger } from '@angular/animations';
+import { SQLiteService } from '../Services/sqlite.service';
 
 @Component({
   selector: 'app-root',
@@ -33,7 +34,7 @@ export class AppComponent {
   public hideFooter: boolean = false;
   public swipingAnimation: boolean = false;
 
-  public constructor(headerService: AppService, cdr: ChangeDetectorRef) {
+  public constructor(headerService: AppService, cdr: ChangeDetectorRef, private readonly sqliteService: SQLiteService) {
     headerService.headerTitleSubject.subscribe((newHeader) => {this.headerTitle = newHeader; cdr.detectChanges();});
     headerService.hideHeader.subscribe((hide) => {this.hideHeader = hide; cdr.detectChanges()});
     headerService.hideFooter.subscribe((hide) => {this.hideFooter = hide; cdr.detectChanges()});
@@ -42,5 +43,21 @@ export class AppComponent {
 
   getAnimationData(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
+
+  async ngOnInit() {
+    try {
+      await this.sqliteService.initializeWebPlugin();
+      await this.sqliteService.createConnection();
+      await this.sqliteService.openConnection();
+
+      // Example query
+      await this.sqliteService.executeQuery('CREATE TABLE IF NOT EXISTS test (id INTEGER PRIMARY KEY, name TEXT)');
+      console.log('Table created.');
+
+      await this.sqliteService.closeConnection();
+    } catch (error) {
+      console.error('SQLite error:', error);
+    }
   }
 }
