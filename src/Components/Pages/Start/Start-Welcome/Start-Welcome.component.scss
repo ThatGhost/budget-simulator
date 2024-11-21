@@ -24,9 +24,10 @@
         right: -30%;
         top: -5%;
         bottom: -5%;
-        width: 155vw;
+        width: 165vw;
         object-fit: cover;
         z-index: -1;
+        max-width: none;
     }
 
     .start-button {
