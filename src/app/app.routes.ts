@@ -3,6 +3,8 @@ import { HomeComponent } from '../Components/Pages/Home/Home.component';
 import { StartWelcomeComponent } from '../Components/Pages/Start/Start-Welcome/Start-Welcome.component';
 import { StartFirstPageComponent } from '../Components/Pages/Start/Start-BasicData/Start-FirstPage.component';
 import { StartFinanceBasicsComponent } from '../Components/Pages/Start/Start-FinanceBasics/Start-FinanceBasics.component';
+import { StartDebtComponent } from '../Components/Pages/Start/Start-Debt/Start-Debt.component';
+import { animation } from '@angular/animations';
 
 export const routes: Routes = [{
     component: HomeComponent,
@@ -27,6 +29,13 @@ export const routes: Routes = [{
     path: "start/finances",
     data: {
         animation: "StartFinancesPage"
+    }
+}, 
+{
+    component: StartDebtComponent,
+    path: "start/debt",
+    data: {
+        animation: "StartDebtPage"
     }
 }
 ];

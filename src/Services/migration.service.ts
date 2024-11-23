@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { SQLiteService } from './sqlite.service';
 import { UserTableMigration } from './migrations/UserTableMigration';
 import _ from 'lodash';
+import { MonthlyStatsMigration } from './migrations/MonthlyStatsMigration';
 
 export interface IMigration {
   name: Symbol;
@@ -17,6 +18,7 @@ export class MigrationService {
 
   constructor(private readonly sqliteService: SQLiteService) {
     this.migrations.push(new UserTableMigration(sqliteService));
+    this.migrations.push(new MonthlyStatsMigration(sqliteService));
   }
 
   public async RunMigrations() {

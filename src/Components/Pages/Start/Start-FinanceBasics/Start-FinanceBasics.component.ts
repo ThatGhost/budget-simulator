@@ -6,6 +6,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { IUser, UserService } from '../../../../Services/user.service';
 import { AppService } from '../../../../Services/header.service';
+import { DebtState, MonthlyBasicFinancesService } from '../../../../Services/MonthlyBasicFinances.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-Start-FinanceBasics',
@@ -18,7 +20,9 @@ export class StartFinanceBasicsComponent {
 
   constructor(
     private readonly userService: UserService,
-    private readonly appService: AppService
+    private readonly appService: AppService,
+    private readonly monthlyBasicsFinancy: MonthlyBasicFinancesService,
+    private readonly router: Router
   )
   {
 
@@ -33,7 +37,16 @@ export class StartFinanceBasicsComponent {
   }
 
   public async OnNext(funds: string, costs: string, income: string, debt: string) {
+    if(!this.CanClickNext(funds, costs, income, debt)) return;
 
+    const debtState = debt as DebtState
+    await this.monthlyBasicsFinancy.addMonthlyBasicFinances(parseInt(funds), parseInt(costs), parseInt(income), debtState);
+    if(debtState === "N") {
+      this.router.navigate([""]);
+    }
+    else if(debtState === "D" || debtState === "MD") {
+      this.router.navigate(["start", "debt"]);
+    }
   }
 
   public CanClickNext(funds: string, costs: string, income: string, debt: string): boolean {
