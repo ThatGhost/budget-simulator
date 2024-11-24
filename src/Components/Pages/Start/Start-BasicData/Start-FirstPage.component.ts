@@ -5,7 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { Country, UserService, UserStatus } from '../../../../Services/user.service';
+import { Country, UserService, UserStatus } from '../../../../Services/User.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
   imports: [ButtonRoundComponent, MatFormFieldModule, MatInputModule, MatSelectModule, CommonModule]
 })
 export class StartFirstPageComponent {
+  public isAgeNumber = true;
+
   constructor(
     private readonly appService: AppService,
     private readonly userService: UserService,
@@ -40,7 +42,8 @@ export class StartFirstPageComponent {
   }
 
   public IsNumber(numb: string): boolean {
-    return numb === "" || !isNaN(parseInt(numb));
+    const parsed = parseInt(numb)
+    return numb === "" || (!isNaN(parsed) && parsed > 0);
   }
 
 }

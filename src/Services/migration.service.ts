@@ -3,12 +3,12 @@ import { SQLiteService } from './sqlite.service';
 import { UserTableMigration } from './migrations/UserTableMigration';
 import _ from 'lodash';
 import { MonthlyStatsMigration } from './migrations/MonthlyStatsMigration';
+import { DebtMigration } from './migrations/DebtMigration';
 
 export interface IMigration {
   name: Symbol;
   Run(): Promise<void>;
 }
-const nameof = <T>(name: keyof T) => name;
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,7 @@ export class MigrationService {
   constructor(private readonly sqliteService: SQLiteService) {
     this.migrations.push(new UserTableMigration(sqliteService));
     this.migrations.push(new MonthlyStatsMigration(sqliteService));
+    this.migrations.push(new DebtMigration(sqliteService));
   }
 
   public async RunMigrations() {

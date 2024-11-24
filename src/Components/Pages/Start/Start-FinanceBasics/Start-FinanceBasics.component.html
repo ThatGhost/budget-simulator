@@ -7,7 +7,7 @@
 
     <mat-form-field class = "input">
       <mat-label>Total funds</mat-label>
-      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Total funds" #funds>
+      <input  matInput placeholder="Total funds" #funds>
       @if (!IsNumber(funds.value)) {
         <mat-hint class = "error">Please enter a valid number</mat-hint>
       }
@@ -18,7 +18,7 @@
 
     <mat-form-field class = "input">
       <mat-label>Fixed Costs</mat-label>
-      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Fixed costs" #costs>
+      <input  matInput placeholder="Fixed costs" #costs>
       @if (!IsNumber(costs.value)) {
         <mat-hint class = "error">Please enter a valid number</mat-hint>
       }
@@ -29,7 +29,7 @@
 
     <mat-form-field class = "input">
       <mat-label>Income</mat-label>
-      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Income" #income>
+      <input  matInput placeholder="Income" #income>
       @if (!IsNumber(income.value)) {
         <mat-hint class = "error">Please enter a valid number</mat-hint>
       }

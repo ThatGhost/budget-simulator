@@ -4,7 +4,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { IUser, UserService } from '../../../../Services/user.service';
+import { IUser, UserService } from '../../../../Services/User.service';
 import { AppService } from '../../../../Services/header.service';
 import { DebtState, MonthlyBasicFinancesService } from '../../../../Services/MonthlyBasicFinances.service';
 import { Router } from '@angular/router';
@@ -54,6 +54,7 @@ export class StartFinanceBasicsComponent {
   }
 
   public IsNumber(numb: string): boolean {
-    return numb === "" || !isNaN(parseInt(numb));
+    const parsed = parseInt(numb)
+    return numb === "" || (!isNaN(parsed) && parsed > 0);
   }
 }

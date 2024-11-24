@@ -1,22 +1,18 @@
 <div class = "basic-info">
   <div class = "info">
-    <span>Fill in the details about your debt</span>
+    <span>Fill in the details about your Mortage</span>
   </div>
 
   <form class="form">
 
     <mat-form-field class = "input">
-      <mat-label>Debt type</mat-label>
+      <mat-label>Mortgage type</mat-label>
       <mat-select #type>
-        <mat-option value="PL">Personal loan</mat-option>
-        <mat-option value="FC">Flexibal credit</mat-option>
-        <mat-option value="R">In red</mat-option>
-        <mat-option value="PL">Pay later</mat-option>
-        <mat-option value="C">Credit card</mat-option>
-        <mat-option value="L">Leasing</mat-option>
-        <mat-option value="BB">Buy back</mat-option>
+        <mat-option value="F">Fixed rate mortgage</mat-option>
+        <mat-option value="R">Adjustable rate mortgage</mat-option>
+        <mat-option value="P">Adjustable period mortgage</mat-option>
       </mat-select>
-      <mat-hint>What type of debt is it?</mat-hint>
+      <mat-hint>What type of mortgage is it?</mat-hint>
     </mat-form-field>
 
     <mat-form-field class = "input">
@@ -26,7 +22,7 @@
         <mat-hint class = "error">Please enter a valid amount</mat-hint>
       }
       @else {
-        <mat-hint>How much is the debt?</mat-hint>
+        <mat-hint>How much is the mortgage</mat-hint>
       }
     </mat-form-field>
 
@@ -43,18 +39,18 @@
 
     <mat-form-field class = "input">
       <mat-label>Time</mat-label>
-      <input  matInput placeholder="Months till end" #time>
+      <input  matInput placeholder="Time in years" #time>
       @if (!IsNumber(time.value)) {
         <mat-hint class = "error">Please enter a valid time</mat-hint>
       }
       @else {
-        <mat-hint>How long in months?</mat-hint>
+        <mat-hint>How long in years</mat-hint>
       }
     </mat-form-field>
 
     <mat-form-field class = "input">
       <mat-label>Payed off</mat-label>
-      <input  matInput placeholder="payed of, no decimals" #payedoff>
+      <input  matInput placeholder="payed off, no decimals" #payedoff>
       @if (!IsNumber(payedoff.value)) {
         <mat-hint class = "error">Please enter a valid amount</mat-hint>
       }

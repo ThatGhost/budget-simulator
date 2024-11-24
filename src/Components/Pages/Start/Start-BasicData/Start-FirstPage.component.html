@@ -22,7 +22,7 @@
 
     <mat-form-field class = "input">
       <mat-label>Age</mat-label>
-      <input pattern="[0-9]{1,2}" type="number" matInput placeholder="Your Age" #age>
+      <input (input)="IsNumber(age.value)" matInput placeholder="Your Age" #age>
       @if (!IsNumber(age.value)) {
         <mat-hint class = "error">Please enter a valid age</mat-hint>
       }
