@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AppService } from '../../../../Services/header.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -24,6 +24,7 @@ export class StartDebtComponent {
     private readonly router: Router,
     private readonly debtService: DebtService,
     private readonly BasicFinancesService: MonthlyBasicFinancesService,
+    private readonly cdr: ChangeDetectorRef, 
   )
   {
 
@@ -35,6 +36,7 @@ export class StartDebtComponent {
     this.appService.HideFooter(true);
     this.appService.PlayAnimation(true);
     this.appService.ChangeHeaderName(`Debt Details`);
+    this.cdr.detectChanges();
   }
 
   public async OnNext(type: string, total: string, interest: string, time: string, payedOff: string) {
@@ -53,7 +55,7 @@ export class StartDebtComponent {
     const parsed = parseInt(numb)
     return numb === "" || (!isNaN(parsed) && parsed > 0);
   }
-  
+
   public IsFloat(numb: string): boolean {
     const parsed = parseFloat(numb)
     return numb === "" || (!isNaN(parsed) && parsed > 0);

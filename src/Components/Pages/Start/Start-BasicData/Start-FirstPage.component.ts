@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AppService } from '../../../../Services/header.service';
 import { ButtonRoundComponent } from '../../../Standalone/Button-Round/Button-Round.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -20,7 +20,8 @@ export class StartFirstPageComponent {
   constructor(
     private readonly appService: AppService,
     private readonly userService: UserService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef, 
   ) {
   }
 
@@ -29,6 +30,7 @@ export class StartFirstPageComponent {
     this.appService.HideFooter(true);
     this.appService.PlayAnimation(true);
     this.appService.ChangeHeaderName("Basic information");
+    this.cdr.detectChanges();
   }
 
   public async OnNext(name: string, country: string, age: string, status: string) {

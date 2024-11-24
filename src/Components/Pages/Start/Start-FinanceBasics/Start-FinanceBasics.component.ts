@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ButtonRoundComponent } from '../../../Standalone/Button-Round/Button-Round.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +22,8 @@ export class StartFinanceBasicsComponent {
     private readonly userService: UserService,
     private readonly appService: AppService,
     private readonly monthlyBasicsFinancy: MonthlyBasicFinancesService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef, 
   )
   {
 
@@ -33,7 +34,8 @@ export class StartFinanceBasicsComponent {
     this.appService.HideHeader(false);
     this.appService.HideFooter(true);
     this.appService.PlayAnimation(true);
-    this.appService.ChangeHeaderName(`Hi ${this.user.name}!`);
+    this.appService.ChangeHeaderName(`Welcome ${this.user.name}!`);
+    this.cdr.detectChanges();
   }
 
   public async OnNext(funds: string, costs: string, income: string, debt: string) {

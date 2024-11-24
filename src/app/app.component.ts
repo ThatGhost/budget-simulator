@@ -38,8 +38,6 @@ export class AppComponent {
   public constructor(
     appService: AppService, 
     cdr: ChangeDetectorRef, 
-    private readonly sqliteService: SQLiteService,
-    private readonly migrationService: MigrationService
   ) {
     appService.headerTitleSubject.subscribe((newHeader) => {this.headerTitle = newHeader; cdr.detectChanges();});
     appService.hideHeader.subscribe((hide) => {this.hideHeader = hide; cdr.detectChanges()});
@@ -49,15 +47,5 @@ export class AppComponent {
 
   getAnimationData(outlet: RouterOutlet) {
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
-  }
-
-  async ngOnInit() {
-    try {
-      await this.sqliteService.initializeWebPlugin();
-      await this.sqliteService.createConnection();
-      await this.migrationService.RunMigrations();
-    } catch (error) {
-      console.error('SQLite error:', error);
-    }
   }
 }

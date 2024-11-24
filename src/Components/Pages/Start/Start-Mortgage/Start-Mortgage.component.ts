@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { AppService } from '../../../../Services/header.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,8 @@ export class StartMortgageComponent {
   constructor(
     private readonly appService: AppService,
     private readonly router: Router,
-    private readonly debtService: DebtService
+    private readonly debtService: DebtService,
+    private readonly cdr: ChangeDetectorRef, 
   )
   {
 
@@ -29,7 +30,8 @@ export class StartMortgageComponent {
     this.appService.HideHeader(false);
     this.appService.HideFooter(true);
     this.appService.PlayAnimation(true);
-    this.appService.ChangeHeaderName(`Debt Details`);
+    this.appService.ChangeHeaderName(`Mortgage Details`);
+    this.cdr.detectChanges();
   }
 
   public async OnNext(type: string, total: string, interest: string, time: string, payedOff: string) {
